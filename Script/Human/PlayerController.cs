@@ -15,14 +15,14 @@ public class PlayerController : MonoBehaviour
 
 
     private Vector2 MoveVect;
-    private Rigidbody2D rigt;
+    private Rigidbody2D Rigt;
 
     public bool isStop;
 
     private void Start()
     {
         isStop = true;
-        rigt = GetComponent<Rigidbody2D>();
+        Rigt = GetComponent<Rigidbody2D>();
 
         Observable.EveryUpdate()
             .Where(_ => Input.GetKey(KeyCode.D)&&isStop)
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
             .Subscribe(_ => PlayerMove()).AddTo(this);
 
         Observable.EveryUpdate()
-            .Where(_ => Input.GetKeyDown(KeyCode.Space) && rigt.velocity.y == 0)
+            .Where(_ => Input.GetKeyDown(KeyCode.Space)&&isStop&& Rigt.velocity.y == 0)
             .Subscribe(_ => PlayerJump()).AddTo(this);
     }
 
@@ -41,14 +41,14 @@ public class PlayerController : MonoBehaviour
     private void PlayerMove()
     {
         MoveVect.x = Input.GetAxis("Horizontal")*Speed;
-        MoveVect.y = rigt.velocity.y;
-        rigt.velocity = MoveVect;
+        MoveVect.y = Rigt.velocity.y;
+        Rigt.velocity = MoveVect;
     }
 
 
     private void PlayerJump()
     {
-        rigt.AddForce(transform.up * JumpPower);
+        Rigt.AddForce(transform.up * JumpPower);
     }
 
 

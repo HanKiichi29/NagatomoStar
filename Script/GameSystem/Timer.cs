@@ -10,35 +10,28 @@ using UniRx;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private Text TimeText;
-    [SerializeField] private GameOver gameover;
+    private float Second;
 
-    private float second;
-
-    private bool isStop=true;
+    private ReactiveProperty<bool> isTimeOut=new ReactiveProperty<bool>(false);
+    public IReadOnlyReactiveProperty<bool> isTimeOutRP => isTimeOut;
 
     private void Start()
     {
 
-        second = 10;
-
-        Observable.EveryUpdate()
-            .Where(_=>isStop)
-            .Subscribe(_ => CountDown()).AddTo(this);
+        Second = 10;
 
     }
 
-    private void CountDown()
+    public void CountDown()
     {
-        if (second >= 0)
+        if (Second >= 0)
         {
-            second -= Time.deltaTime;
-            TimeText.text = second.ToString("F1");
+            Second -= Time.deltaTime;
+            TimeText.text = Second.ToString("F1");
         }
         else
         {
-            isStop = false;
-            gameover.TimeOver();
-            Debug.Log("タイムオーバー");
+            isTimeOut.Value = true;
         }
 
     }

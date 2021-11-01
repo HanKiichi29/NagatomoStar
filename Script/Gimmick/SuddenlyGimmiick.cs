@@ -4,7 +4,7 @@ using UnityEngine;
 using UniRx;
 
 /// <summary>
-/// 手が出てくるギミック
+/// 手の発射
 /// </summary>
 
 public class SuddenlyGimmiick : MonoBehaviour

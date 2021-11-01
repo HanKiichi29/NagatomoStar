@@ -11,19 +11,13 @@ public class GameOver : MonoBehaviour
 {
 
     [SerializeField] private Text GameOverText;
-    [SerializeField] private GameObject player;
     [SerializeField] private GameObject GameOverPanel;
 
-    private PlayerController playerController;
-    private void Start()
-    {
-        var p = GameObject.FindGameObjectWithTag("Player");
-        player = p;
-        playerController = p.GetComponent<PlayerController>();
+   
 
-    }
-
-    
+    /// <summary>
+    /// 時間切れの時の処理
+    /// </summary>
     public void TimeOver()
     {
         GameOverText.text = "TimeOver";
@@ -31,6 +25,9 @@ public class GameOver : MonoBehaviour
         PanelDown();
     }
 
+    /// <summary>
+    /// ギミックに当たってしまった時の処理
+    /// </summary>
     public void HitEnmy()
     {
         GameOverText.text = "YouDead";
@@ -38,9 +35,11 @@ public class GameOver : MonoBehaviour
         PanelDown();
     }
 
+    /// <summary>
+    /// ゲームオーバーになったときに出すパネル
+    /// </summary>
     private void PanelDown()
     {
-        playerController.isStop = false;
 
         GameOverPanel.transform.DOLocalMoveY(0, 0.5f)
             .SetLink(gameObject)
